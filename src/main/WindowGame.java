@@ -29,7 +29,7 @@ public class WindowGame {
 			
 			@Override // print out sthing when close window
 			public void windowLostFocus(WindowEvent e) {
-				gamePanel.getGame().windowForusLost();;
+				gamePanel.getGame().windowFocusLost();
 			}
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
