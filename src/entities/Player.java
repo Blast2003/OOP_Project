@@ -24,6 +24,9 @@ import java.nio.Buffer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import utilz.LoadSave;
+
 import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity {
@@ -110,27 +113,16 @@ public class Player extends Entity {
 		// InputStream is = getClass().getResourceAsStream("/Adventurer Sprite sheet.png"); // import IMG
 	
 		
-		try {
+		
 			// BufferedImage img = ImageIO.read(is);
-			BufferedImage img= ImageIO.read(new FileInputStream("res/adventurer_Sprite_Sheet.png"));
+			BufferedImage img= LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 			
 			animations = new BufferedImage[13][13];
 			
 			for(int j =0 ; j<animations.length; j++)
 				for(int i = 0; i < animations[j].length; i++)
 				animations[j][i]= img.getSubimage(i*64,j*64, 64, 64);
-		
-		}	catch (IOException e ) {
-			e.printStackTrace();
 			
-		} finally {
-			try {
-				// .close();
-				new FileInputStream("res/adventurer_Sprite_Sheet.png").close();
-			} catch(IOException e ) {
-				e.printStackTrace();
-			}
-		}		
 	}
 	public void resetDirBooleans() {
 		left = false;
