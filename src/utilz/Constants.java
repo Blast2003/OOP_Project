@@ -4,6 +4,64 @@ import main.Game;
 
 public class Constants {
 
+    public static class EnemyConstants {
+        public static final int CRABBY = 0;
+
+        public static final int IDLE = 0;
+        public static final int RUNNING = 1;
+        public static final int ATTACK = 2;
+        public static final int HIT = 3;
+        public static final int DEAD = 4;
+
+        public static final int CRABBY_WIDTH_DEFAULT = 72;
+        public static final int CRABBY_HEIGHT_DEFAULT = 32;
+
+        public static final int CRABBY_WIDTH = (int)(CRABBY_WIDTH_DEFAULT * Game.SCALE);
+        public static final int CRABBY_HEIGHT = (int)(CRABBY_HEIGHT_DEFAULT * Game.SCALE);
+
+        public static final int CRABBY_DRAWOFFSET_X = (int)(26 * Game.SCALE);
+        public static final int CRABBY_DRAWOFFSET_Y = (int)(9 * Game.SCALE);
+
+        public static int GetSpriteAmount(int enemy_type, int enemy_state) {
+            
+            switch (enemy_type) {
+                case CRABBY:
+                    switch (enemy_state) {
+                        case IDLE:
+                            return 9;
+                        case RUNNING:
+                            return 6;
+                        case ATTACK:
+                            return 7;
+                        case HIT:
+                            return 4;
+                        case DEAD:
+                            return 5;
+                    }
+            }
+            return 0;
+        }
+
+        public static int GetMaxHealth(int enemy_type) {
+            switch (enemy_type) {
+                case CRABBY: 
+                    return 10;
+                default:
+                    return 1;
+            }
+        }
+
+        public static int GetEnemyDmg(int enemy_type) {
+            switch (enemy_type) {
+                case CRABBY: 
+                    return 15;
+                default:
+                    return 0;
+            }
+        }
+
+    }
+
     public static class Environment{
         public static final int BIG_CLOUD_WIDTH_DEFAULT = 448;
         public static final int BIG_CLOUD_HEIGHT_DEFAULT = 101;
@@ -54,34 +112,39 @@ public class Constants {
     }
 
     public static class PlayerConstants{
-        public static final int RUNNING = 1;
         public static final int IDLE = 0;
+        public static final int RUNNING = 1;
+        // public static final int ATTACK_JUMP_1 = 2;
+        public static final int ATTACK_1 = 3;
+        // public static final int ATTACK_JUMP_2 = 4;
+        // public static final int GROUND = 4;
         public static final int JUMP = 5;
         public static final int FALLING = 6;
-        // public static final int GROUND = 4;
-        public static final int HIT = 8;
-        public static final int ATTACK_1 = 3;
-        public static final int ATTACK_JUMP_1 = 2;
-        public static final int ATTACK_JUMP_2 = 4;
+        public static final int HIT = 7;
+        public static final int DEAD = 8;
+      
+      
 
         public static int GetSpriteAmount(int  player_action){
             switch (player_action) {
+                case DEAD:
+                    return 7; // cần check lai sau!
                 case RUNNING:
                     return 8;
                 case IDLE:
                     return 10;
                 case JUMP:
-                    return 5;
+                    return 5;   
                 case FALLING:
                     return 1;
                 case HIT:
-                    return 8;
+                    return 4;
                 case ATTACK_1:
                     return 8;
-                case ATTACK_JUMP_1:
-                    return 8;
-                case ATTACK_JUMP_2:
-                    return 8;
+                // case ATTACK_JUMP_1:
+                //     return 8;
+                // case ATTACK_JUMP_2:
+                //     return 8;
                 default:
                     return -1;
             }
