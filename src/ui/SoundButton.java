@@ -8,46 +8,47 @@ import static utilz.Constants.UI.PauseButtons.*;
 
 public class SoundButton extends PauseButton {
 
-	private BufferedImage[][] soundImgs;
+	private BufferedImage[][] soundImgs; 	
 	private boolean mouseOver, mousePressed;
 	private boolean muted;
 	private int rowIndex, colIndex;
-
+	
 	public SoundButton(int x, int y, int width, int height) {
 		super(x, y, width, height);
-
+		
 		loadSoundImgs();
 	}
 
 	private void loadSoundImgs() {
 		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.SOUND_BUTTONS);
 		soundImgs = new BufferedImage[2][3];
-		for (int j = 0; j < soundImgs.length; j++)
-			for (int i = 0; i < soundImgs[j].length; i++)
-				soundImgs[j][i] = temp.getSubimage(i * SOUND_SIZE_DEFAULT, j * SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT);
+		for(int j = 0; j < soundImgs.length; j++)
+			for(int i = 0; i < soundImgs[j].length; i++)
+				soundImgs[j][i] = temp.getSubimage(i* SOUND_SIZE_DEFAULT , j*SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT);
 	}
-
+	
 	public void update() {
-		if (muted)
+		if(muted)
 			rowIndex = 1;
-		else
+		else 
 			rowIndex = 0;
-
+		
+		
 		colIndex = 0;
-		if (mouseOver)
+		if(mouseOver)
 			colIndex = 1;
-		if (mousePressed)
+		if(mousePressed)
 			colIndex = 2;
-
+		
 	}
-
+	
 	public void resetBools() {
 		mouseOver = false;
 		mousePressed = false;
 	}
-
+	
 	public void draw(Graphics g) {
-		g.drawImage(soundImgs[rowIndex][colIndex], x, y, width, height, null);
+		g.drawImage(soundImgs[rowIndex][colIndex],x, y, width, height,  null);
 	}
 
 	public boolean isMouseOver() {
@@ -73,5 +74,7 @@ public class SoundButton extends PauseButton {
 	public void setMuted(boolean muted) {
 		this.muted = muted;
 	}
-
+	
+	
+	
 }

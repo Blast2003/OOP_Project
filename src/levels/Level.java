@@ -1,30 +1,42 @@
 package levels;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import entities.Crabby;
-import main.Game;
-import objects.Cannon;
-import objects.GameContainer;
-import objects.Potion;
-import objects.Spike;
-import utilz.HelpMethods;
+import entities.Goblin_Worker;
+import entities.Goblin_Assassin;
 
-import static utilz.HelpMethods.GetLevelData;
-import static utilz.HelpMethods.GetCrabs;
-import static utilz.HelpMethods.GetPlayerSpawn;
+import entities.Dragon;
+import Main.Game;
+//import Objects.BackgroundTree;
+import Objects.Cannon;
+import Objects.GameContainer;
+//import Objects.Grass;
+import Objects.Potion;
+import Objects.Spike;
+import Objects.Tree;
+
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.ObjectConstants.*;
 
 public class Level {
 
 	private BufferedImage img;
-	private int[][] lvlData;
-	private ArrayList<Crabby> crabs;
-	private ArrayList<Potion> potions;
-	private ArrayList<Spike> spikes;
-	private ArrayList<GameContainer> containers;
-	private ArrayList<Cannon> cannons;
+	private int[][] lvData;
+
+	private ArrayList<Goblin_Worker> workers = new ArrayList<>();
+	private ArrayList<Goblin_Assassin> assassins = new ArrayList<>();
+	private ArrayList<Dragon> dragons = new ArrayList<>();
+	private ArrayList<Potion> potions = new ArrayList<>();
+	private ArrayList<Spike> spikes = new ArrayList<>();
+	private ArrayList<GameContainer> containers = new ArrayList<>();
+	private ArrayList<Cannon> cannons = new ArrayList<>();
+	private ArrayList<Tree> trees = new ArrayList<>();
+//	private ArrayList<BackgroundTree> trees = new ArrayList<>();
+//	private ArrayList<Grass> grass = new ArrayList<>();
+
 	private int lvlTilesWide;
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
@@ -32,34 +44,62 @@ public class Level {
 
 	public Level(BufferedImage img) {
 		this.img = img;
-		createLevelData();
-		createEnemies();
-		createPotions();
-		createContainers();
-		createSpikes();
-		createCannons();
+		lvData = new int[img.getHeight()][img.getWidth()];
+		loadLevel();
 		calcLvlOffsets();
-		calcPlayerSpawn();
 	}
 
-	private void createCannons() {
-		cannons = HelpMethods.GetCannons(img);
+	private void loadLevel() {
+
+		// Looping through the image colors just once. Instead of one per
+		// object/enemy/etc..
+
+		for (int y = 0; y < img.getHeight(); y++)
+			for (int x = 0; x < img.getWidth(); x++) {
+				Color c = new Color(img.getRGB(x, y));
+				int red = c.getRed();
+				int green = c.getGreen();
+				int blue = c.getBlue();
+
+				loadLevelData(red, x, y); // level = red
+				loadEntities(green, x, y); // entities ( player, enemies)= green
+				loadObjects(blue, x, y); // object = blue
+			}
 	}
 
-	private void createSpikes() {
-		spikes = HelpMethods.GetSpikes(img);
+	private void loadLevelData(int redValue, int x, int y) {
+		if (redValue >= 50)
+			lvData[y][x] = 0;
+		else
+			lvData[y][x] = redValue;
+/*		switch (redValue) {
+		case 0, 1, 2, 3, 30, 31, 33, 34, 35, 36, 37, 38, 39 -> 
+		grass.add(new Grass((int) (x * Game.TILES_SIZE), (int) (y * Game.TILES_SIZE) - Game.TILES_SIZE, getRndGrassType(x)));
+		}
+*/		
 	}
 
-	private void createContainers() {
-		containers = HelpMethods.GetContainers(img);
+//	private int getRndGrassType(int xPos) {
+//		return xPos % 2;
+//	}
+
+	private void loadEntities(int GreenValue, int x, int y) {
+		switch (GreenValue) {
+		case GOBLIN_WORKER -> workers.add(new Goblin_Worker(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case GOBLIN_ASSASSIN -> assassins.add(new Goblin_Assassin(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case DRAGON -> dragons.add(new Dragon(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+		case 100 -> playerSpawn = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE); // set player spawn at case color 100
+		}
 	}
 
-	private void createPotions() {
-		potions = HelpMethods.GetPotions(img);
-	}
-
-	private void calcPlayerSpawn() {
-		playerSpawn = GetPlayerSpawn(img);
+	private void loadObjects(int BlueValue, int x, int y) {
+		switch (BlueValue) {
+		case RED_POTION, BLUE_POTION -> potions.add(new Potion(x * Game.TILES_SIZE, y * Game.TILES_SIZE, BlueValue));
+		case BOX, BARREL -> containers.add(new GameContainer(x * Game.TILES_SIZE, y * Game.TILES_SIZE, BlueValue));
+		case SPIKE -> spikes.add(new Spike(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
+		case CANNON_LEFT, CANNON_RIGHT -> cannons.add(new Cannon(x * Game.TILES_SIZE, y * Game.TILES_SIZE, BlueValue));
+		case TREE-> trees.add(new Tree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, BlueValue));
+		}
 	}
 
 	private void calcLvlOffsets() {
@@ -68,32 +108,32 @@ public class Level {
 		maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
 	}
 
-	private void createEnemies() {
-		crabs = GetCrabs(img);
-	}
-
-	private void createLevelData() {
-		lvlData = GetLevelData(img);
-	}
-
 	public int getSpriteIndex(int x, int y) {
-		return lvlData[y][x];
+		return lvData[y][x];
 	}
 
 	public int[][] getLevelData() {
-		return lvlData;
+		return lvData;
 	}
 
-	public int getLvlOffset() {
+	public int getLvOffset() {
 		return maxLvlOffsetX;
-	}
-
-	public ArrayList<Crabby> getCrabs() {
-		return crabs;
 	}
 
 	public Point getPlayerSpawn() {
 		return playerSpawn;
+	}
+
+	public ArrayList<Goblin_Worker> getWorkers() {
+		return workers;
+	}
+
+	public ArrayList<Dragon> getDragons() {
+		return dragons;
+	}
+	
+	public ArrayList<Goblin_Assassin> getAssassins() {
+		return assassins;
 	}
 
 	public ArrayList<Potion> getPotions() {
@@ -104,12 +144,18 @@ public class Level {
 		return containers;
 	}
 
+
 	public ArrayList<Spike> getSpikes() {
 		return spikes;
 	}
-	
-	public ArrayList<Cannon> getCannons(){
+
+	public ArrayList<Cannon> getCannons() {
 		return cannons;
 	}
+
+	public ArrayList<Tree> getTrees() {
+		return trees;
+	}
+
 
 }
