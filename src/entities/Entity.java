@@ -100,5 +100,13 @@ public abstract class Entity {
 		 aniTick = 0;
 		 aniIndex = 0;
 	}
+
+	public float getPushDrawOffset() {
+		return pushDrawOffset;
+	}
+
+	public int getPushBackOffsetDir() {
+		return pushBackOffsetDir;
+	}
 	
 }
