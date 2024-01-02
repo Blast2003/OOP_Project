@@ -49,7 +49,7 @@ public class Goblin_Worker extends Enemy{
 				if(aniIndex == 0)
 					attackChecked = false;
 				
-				else if(aniIndex == 4 && !attackChecked ) {
+				else if(aniIndex == 3 && !attackChecked ) {
 						checkEnemyHit(attackBox, playing.getPlayer());
 				}
 				break;

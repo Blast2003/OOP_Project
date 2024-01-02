@@ -64,7 +64,6 @@ public class Playing extends State implements Statemethods{
 	}
 	
 	public void loadNextLevel() {
-		levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
 		levelManager.loadNextLevel();
 		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
 		resetAll();
@@ -284,15 +283,10 @@ public class Playing extends State implements Statemethods{
 	// create a new method under or above the override method
 	
 	public void setLevelCompleted(boolean levelCompleted) {
-		game.getauAudioPlayer().lvCompleted();
-		if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
-			// No more levels
-			levelManager.setLevelIndex(0);
-			levelManager.loadNextLevel();
-			resetAll();
-			return;
-		}
 		this.lvCompleted = levelCompleted;
+		if(levelCompleted)
+			game.getauAudioPlayer().lvCompleted();
+		
 	}
 	
 	public void setMaxLvOffset(int lvOffset) {
