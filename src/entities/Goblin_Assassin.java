@@ -11,14 +11,14 @@ public class Goblin_Assassin extends Enemy {
 	
 	public Goblin_Assassin(float x, float y) {
 		super(x, y, GOBLIN_ASSASSIN_WIDTH, GOBLIN_ASSASSIN_HEIGHT, GOBLIN_ASSASSIN);
-		initHitbox(19, 20);
-		initAttackBox(30, 20, 30);
+		initHitbox(22, 19);
+		initAttackBox(82,19, 30);
 	}
 	
 	public void update(int[][] lvlData, Playing playing) {
 		updateBehavior(lvlData, playing);
 		updateAnimationTick();
-		updateAttackBoxFlip();
+		updateAttackBox();
 	}
 
 	private void updateBehavior(int[][] lvData, Playing playing) {

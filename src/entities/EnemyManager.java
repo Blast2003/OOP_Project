@@ -65,8 +65,8 @@ public class EnemyManager {
 						GOBLIN_WORKER_WIDTH * w.flipW(), GOBLIN_WORKER_HEIGHT, null);
 			
 			// draw attack Hit box
-				w.drawAttackBox(g, XlvOffset);
-				w.drawHitbox(g, XlvOffset);
+			//	w.drawAttackBox(g, XlvOffset);
+			//	w.drawHitbox(g, XlvOffset);
 			}
 	}
 	
@@ -79,8 +79,8 @@ public class EnemyManager {
 						(int) A.getHitbox().y - GOBLIN_ASSASSIN_DRAWOFFSET_Y  , 
 						GOBLIN_ASSASSIN_WIDTH * A.flipW(), GOBLIN_ASSASSIN_HEIGHT, null);
 				
-				A.drawHitbox(g, XlvOffset);
-				A.drawAttackBox(g, XlvOffset);
+			//	A.drawHitbox(g, XlvOffset);
+			//	A.drawAttackBox(g, XlvOffset);
 			}	
 	}
 	
@@ -93,8 +93,8 @@ public class EnemyManager {
 						(int) d.getHitbox().y - DRAGON_DRAWOFFSET_Y, 
 						DRAGON_WIDTH * d.flipW(),DRAGON_HEIGHT, null);
 				
-				d.drawAttackBox(g, XlvOffset);
-				d.drawHitbox(g, XlvOffset);
+			//	d.drawAttackBox(g, XlvOffset);
+			//	d.drawHitbox(g, XlvOffset);
 			}	
 	}
 	
@@ -109,15 +109,13 @@ public class EnemyManager {
 					}
 		
 		for(Goblin_Assassin A : currentLevel.getAssassins())
-			if (A.getState() == ATTACK && A.getAniIndex() >= 3)
-				return;
-			else {
+			if(A.isActive())
 				if (A.getState() != DEAD && A.getState() != HURT)
 					if (attackBox.intersects(A.getHitbox())) {
 						A.hurt(20);
 						return;
 					}
-			}
+			
 		
 		for(Dragon d : currentLevel.getDragons())
 			if(d.isActive()) 
