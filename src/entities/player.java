@@ -13,7 +13,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import Main.Game;
-import Objects.Projectile;
 import audio.AudioPlayer;
 import gamestates.Playing;
 import utilz.LoadSave;
@@ -77,11 +76,11 @@ public class player extends Entity {
 		super(x, y, width, height);
 		this.playing = playing;
 		this.state = STAND;
-		this.maxHealth = 150;
+		this.maxHealth = 100;
 		this.currentHealth = maxHealth;
 		this.walkSpeed = Game.SCALE * 1.0f;
 		loadAnimations();
-		initHitbox(15, 25);
+		initHitbox(6, 25);
 		initAttackBox();
 	}
 	
@@ -93,7 +92,7 @@ public class player extends Entity {
 	}
 	
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (35 * Game.SCALE), (int) (17 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (40 * Game.SCALE), (int) (17 * Game.SCALE));
 		resetAttackBox();
 	}
 
@@ -236,9 +235,9 @@ public class player extends Entity {
 				(int) (hitbox.y - yDrawOffset - 2), 
 				width * flipW, height, null); // width = negative => change the direction of charac
 		
-	//	drawHitbox(g, lvOffset);
+		drawHitbox(g, lvOffset);
 		
-	//	drawAttackBox(g,lvOffset);
+		drawAttackBox(g,lvOffset);
 		drawUI(g);
 	}
 
@@ -433,19 +432,6 @@ public class player extends Entity {
 		pushDrawOffset = 0;
 
 		if (e.getHitbox().x < hitbox.x)
-			pushBackDir = RIGHT;
-		else
-			pushBackDir = LEFT;
-	}
-	
-	public void changeHealthObject(int value, Projectile p) {
-		if (state == HURT)
-			return;
-		changeHealth(value);
-		pushBackOffsetDir = UP;
-		pushDrawOffset = 0;
-
-		if (p.getHitbox().x < hitbox.x)
 			pushBackDir = RIGHT;
 		else
 			pushBackDir = LEFT;

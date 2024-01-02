@@ -144,7 +144,6 @@ public class Level {
 		return containers;
 	}
 
-
 	public ArrayList<Spike> getSpikes() {
 		return spikes;
 	}
