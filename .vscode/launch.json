@@ -8,6 +8,13 @@
             "type": "java",
             "name": "MainClass",
             "request": "launch",
+            "mainClass": "Main.MainClass",
+            "projectName": "pirate_advanture"
+        },
+        {
+            "type": "java",
+            "name": "MainClass",
+            "request": "launch",
             "mainClass": "main.MainClass",
             "projectName": "OOP_Project_872cd716"
         },
