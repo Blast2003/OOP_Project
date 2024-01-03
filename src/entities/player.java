@@ -140,7 +140,7 @@ public class player extends Entity {
 		updateAttackBox();
 		if (state == HURT) {
 			if (aniIndex <= GetSpriteAmount(state) - 3)
-				pushBack(pushBackDir, lvData, 1.25f);
+				pushBack(pushBackDir, lvData, 0.7f);
 			updatePushBackDrawOffset();
 		} else
 			updatePos();

@@ -155,11 +155,11 @@ public class Constants {
 		public static int GetMaxHealth(int enemy_type) {
 			switch(enemy_type) {
 			case GOBLIN_WORKER:
-				return 10;
+				return 30;
 			case GOBLIN_ASSASSIN:
 				return 10;
 			case DRAGON:
-				return 30;
+				return 50;
 				default: 
 					return 2;
 			}

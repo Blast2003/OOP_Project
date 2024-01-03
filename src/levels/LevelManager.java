@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 
 import Main.Game;
+import gamestates.Gamestate;
 import utilz.LoadSave;
 
 public class LevelManager {
@@ -36,10 +37,17 @@ public class LevelManager {
 	}
 
 	public void loadNextLevel() {
+		lvIndex++;
+		if(lvIndex >= getAmountOfLevels()) {
+			lvIndex = 0;
+			System.out.println("No more level! Game completed!");
+			Gamestate.state = Gamestate.MENU; // enum => can use directly name of class
+		}
+		
 		Level newLevel = levels.get(lvIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
 		game.getPlaying().getPlayer().loadLvData(newLevel.getLevelData());
-		game.getPlaying().setMaxLvOffset(newLevel.getLvOffset());
+		game.getPlaying().setMaxLvOffset(newLevel.getLvOffset());    	// make the map moving follow to the movement of player
 		game.getPlaying().getObjectManager().loadObject(newLevel);
 	}
 
