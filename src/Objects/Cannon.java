@@ -1,27 +1,26 @@
-package Objects;
+package objects;
 
-import Main.Game;
+import main.Game;
 
-public class Cannon extends GameObject{
+public class Cannon extends GameObject {
 
 	private int tileY;
-	
+
 	public Cannon(int x, int y, int objType) {
 		super(x, y, objType);
-		tileY = y/Game.TILES_SIZE;
+		tileY = y / Game.TILES_SIZE;
 		initHitbox(40, 26);
 		hitbox.x -= (int) (4 * Game.SCALE);
 		hitbox.y += (int) (6 * Game.SCALE);
 	}
-	
+
 	public void update() {
-		if(doAnimation)
+		if (doAnimation)
 			updateAnimationTick();
 	}
-	
+
 	public int getTileY() {
 		return tileY;
 	}
-	
 
 }
