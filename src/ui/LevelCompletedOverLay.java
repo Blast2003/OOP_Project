@@ -12,7 +12,6 @@ import utilz.LoadSave;
 import static utilz.Constants.UI.URMButton.*;
 
 public class LevelCompletedOverLay {
-
 	private Playing playing;
 	private UrmButton menu, next;
 	private BufferedImage img;

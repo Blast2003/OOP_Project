@@ -273,7 +273,7 @@ public class ObjectManager {
 						 (int)(p.getHitbox().x - p.getxDrawOffset() - xLvOffset),
 						 (int)(p.getHitbox().y - p.getyDrawOffset()),
 						 POTION_WIDTH, POTION_HEIGHT, null);
-				p.drawHitbox(g, xLvOffset);
+			//	p.drawHitbox(g, xLvOffset);
 			}
 		
 		}
